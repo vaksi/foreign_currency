@@ -1,0 +1,47 @@
+# Convention for this configuration
+# - string datatype value use '' ; ex: 'this is string'
+# - int datatype value use int ; ex: 1200
+# - option value use value inside comments ; ex: ('development'|'staging'|'production') use 'development'
+
+# Application configuration
+app:
+  name: 'foreign_currency'
+  port: 8081
+  read_timeout: 5 # seconds
+  write_timeout: 10 # seconds
+  timezone: 'Asia/Jakarta'
+  debug: true # (true|false)
+  env: 'development' # ('development'|'staging'|'production')
+  secret_key: ''
+
+# Database connection and credential configuration
+database_sql_slave:
+  db_name: 'foreign_currency'
+  host: 'localhost'
+  port: 3306
+  user: 'root'
+  password: ''
+  charset: 'utf8'
+
+# Database connection and credential configuration
+database_sql_master:
+  db_name: 'foreign_currency'
+  host: 'localhost'
+  port: 3306
+  user: 'root'
+  password: ''
+  charset: 'utf8'
+
+# Database connection and credential configuration
+database:
+  max_life_time: 30
+  max_idle_connection: 200
+  max_open_connection: 200
+
+# Log configuration
+log:
+  path: 'logs/foreign_currency.log'
+
+# Circuit breaker
+circuit_breaker:
+  max_partner_request_timeout: 1000

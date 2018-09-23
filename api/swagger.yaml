@@ -1,0 +1,585 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Forreign Currency
+  description: "This is a document for Foreign Currency API."
+host: example.com
+basePath: /foreign-currency/v1
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /ping:
+    get:
+      description: Check Connectivity
+      summary: Ping
+      tags:
+      - Misc
+      operationId: PingGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/Ping'
+          examples:
+            application/json:
+              code: 1000
+              message: Success
+  /exchange-rates:
+    get:
+      description: 'GET list of exchange rates to be tracked.'
+      summary: GET List Exchange Rate
+      tags:
+      - Misc
+      operationId: ExchangeRatesGet
+      produces:
+      - application/json
+      parameters:
+      - name: date
+        in: query
+        required: true
+        type: string
+        format: date-time
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/GetListExchangeRateSuccess'
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/GetListExchangeRateBadRequest'
+          examples:
+            application/json:
+              code: 2005
+              message: Invalid Input Data
+              errors: must be a valid date
+    post:
+      description: 'Input daily exchange rate data'
+      summary: Add Daily Exchange Rate
+      tags:
+      - Misc
+      operationId: ExchangeRatesPost
+      produces:
+      - application/json
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AddDailyExchangeRaterequest'
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/AddDailyExchangeRateSuccess'
+          examples:
+            application/json:
+              code: 1000
+              message: Success
+        400:
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/AddDailyExchangeRateBadRequest'
+          examples:
+            application/json:
+              code: 2005
+              message: Invalid Input Data
+              errors:
+                date: must be a valid date
+                from: Value ID is not valid in Currency
+                to: Value US=D is not valid in Currency
+  /exchange-rates/trend:
+    get:
+      description: 'See the exchange rate trend from the most recent 7 data points'
+      summary: GET Trend Exchange Rate
+      tags:
+      - Misc
+      operationId: ExchangeRatesTrendGet
+      produces:
+      - application/json
+      parameters:
+      - name: from
+        in: query
+        required: true
+        type: string
+        description: ''
+      - name: to
+        in: query
+        required: true
+        type: string
+        description: ''
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/GetTrendExchangeRateSuccess'
+          examples:
+            application/json:
+              code: 1000
+              message: Success
+              data:
+                from: IDR
+                to: USD
+                average: 14066.714
+                variance: 1114
+                rates:
+                - date: 2018-07-08
+                  rate: 14322
+                - date: 2018-07-07
+                  rate: 14347
+                - date: 2018-07-06
+                  rate: 13233
+                - date: 2018-07-05
+                  rate: 14123
+                - date: 2018-07-04
+                  rate: 14129
+                - date: 2018-07-03
+                  rate: 14222
+                - date: 2018-07-02
+                  rate: 14091
+  /exchange-rates/tracks:
+    post:
+      description: 'Add an exchange rate to the list'
+      summary: Add ExchangeRate To Track
+      tags:
+      - Misc
+      operationId: ExchangeRatesTracksPost
+      produces:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        type: string
+        description: ''
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/AddExchangerateToTrackrequest'
+      responses:
+        201:
+          description: ''
+          schema:
+            $ref: '#/definitions/AddExchangerateToTrackSuccess'
+          examples:
+            application/json:
+              code: 1000
+              message: Success
+    delete:
+      description: 'Delete an exchange rate to the list'
+      summary: DELETE Exchange Rate Track
+      tags:
+      - Misc
+      operationId: ExchangeRatesTracksDelete
+      produces:
+      - application/json
+      parameters:
+      - name: from
+        in: query
+        required: true
+        type: string
+        description: ''
+      - name: to
+        in: query
+        required: true
+        type: string
+        description: ''
+      responses:
+        202:
+          description: ''
+          schema:
+            $ref: '#/definitions/DeleteExchangeRateTrack'
+          examples:
+            application/json:
+              code: 1000
+              message: Success
+definitions:
+  Ping:
+    title: Ping
+    example:
+      code: 1000
+      message: Success
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 1000
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Success
+        type: string
+    required:
+    - code
+    - message
+  AddDailyExchangeRaterequest:
+    title: Add Daily Exchange RateRequest
+    example:
+      date: 2001-03-03
+      from: IDR
+      to: IDR
+      rate: 0.90000000000000002
+    type: object
+    properties:
+      date:
+        description: ''
+        example: 2001-03-03
+        type: string
+      from:
+        description: ''
+        example: IDR
+        type: string
+      to:
+        description: ''
+        example: IDR
+        type: string
+      rate:
+        description: ''
+        example: 0.90000000000000002
+        type: number
+        format: double
+    required:
+    - date
+    - from
+    - to
+    - rate
+  AddDailyExchangeRateSuccess:
+    title: Add Daily Exchange Rate Success
+    example:
+      code: 1000
+      message: Success
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 1000
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Success
+        type: string
+    required:
+    - code
+    - message
+  AddDailyExchangeRateBadRequest:
+    title: Add Daily Exchange Rate Bad Request
+    example:
+      code: 2005
+      message: Invalid Input Data
+      errors:
+        date: must be a valid date
+        from: Value ID is not valid in Currency
+        to: Value US=D is not valid in Currency
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 2005
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Invalid Input Data
+        type: string
+      errors:
+        $ref: '#/definitions/Errors'
+    required:
+    - code
+    - message
+    - errors
+  Errors:
+    title: Errors
+    example:
+      date: must be a valid date
+      from: Value ID is not valid in Currency
+      to: Value US=D is not valid in Currency
+    type: object
+    properties:
+      date:
+        description: ''
+        example: must be a valid date
+        type: string
+      from:
+        description: ''
+        example: Value ID is not valid in Currency
+        type: string
+      to:
+        description: ''
+        example: Value US=D is not valid in Currency
+        type: string
+    required:
+    - date
+    - from
+    - to
+  GetListExchangeRateBadRequest:
+    title: GET List Exchange Rate Bad Request
+    example:
+      code: 2005
+      message: Invalid Input Data
+      errors: must be a valid date
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 2005
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Invalid Input Data
+        type: string
+      errors:
+        description: ''
+        example: must be a valid date
+        type: string
+    required:
+    - code
+    - message
+    - errors
+  GetListExchangeRateSuccess:
+    title: GET List Exchange Rate Success
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 1000
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Success
+        type: string
+      data:
+        description: ''
+        type: array
+        items:
+          $ref: '#/definitions/Datum'
+    required:
+    - code
+    - message
+    - data
+  Datum:
+    title: Datum
+    type: object
+    properties:
+      from:
+        description: ''
+        example: USD
+        type: string
+      to:
+        description: ''
+        example: GBP
+        type: string
+      rate:
+        description: ''
+        example: 0.123
+        type: number
+        format: double
+      seven_day_rates:
+        description: ''
+        example: 0.53096670000000001
+        type: number
+        format: double
+    required:
+    - from
+    - to
+    - rate
+    - seven_day_rates
+  GetTrendExchangeRateSuccess:
+    title: GET Trend Exchange Rate Success
+    example:
+      code: 1000
+      message: Success
+      data:
+        from: IDR
+        to: USD
+        average: 14066.714
+        variance: 1114
+        rates:
+        - date: 2018-07-08
+          rate: 14322
+        - date: 2018-07-07
+          rate: 14347
+        - date: 2018-07-06
+          rate: 13233
+        - date: 2018-07-05
+          rate: 14123
+        - date: 2018-07-04
+          rate: 14129
+        - date: 2018-07-03
+          rate: 14222
+        - date: 2018-07-02
+          rate: 14091
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 1000
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Success
+        type: string
+      data:
+        $ref: '#/definitions/Data'
+    required:
+    - code
+    - message
+    - data
+  Data:
+    title: Data
+    example:
+      from: IDR
+      to: USD
+      average: 14066.714
+      variance: 1114
+      rates:
+      - date: 2018-07-08
+        rate: 14322
+      - date: 2018-07-07
+        rate: 14347
+      - date: 2018-07-06
+        rate: 13233
+      - date: 2018-07-05
+        rate: 14123
+      - date: 2018-07-04
+        rate: 14129
+      - date: 2018-07-03
+        rate: 14222
+      - date: 2018-07-02
+        rate: 14091
+    type: object
+    properties:
+      from:
+        description: ''
+        example: IDR
+        type: string
+      to:
+        description: ''
+        example: USD
+        type: string
+      average:
+        description: ''
+        example: 14066.714
+        type: number
+        format: double
+      variance:
+        description: ''
+        example: 1114
+        type: integer
+        format: int32
+      rates:
+        description: ''
+        example:
+        - date: 2018-07-08
+          rate: 14322
+        - date: 2018-07-07
+          rate: 14347
+        - date: 2018-07-06
+          rate: 13233
+        - date: 2018-07-05
+          rate: 14123
+        - date: 2018-07-04
+          rate: 14129
+        - date: 2018-07-03
+          rate: 14222
+        - date: 2018-07-02
+          rate: 14091
+        type: array
+        items:
+          $ref: '#/definitions/Rate'
+    required:
+    - from
+    - to
+    - average
+    - variance
+    - rates
+  Rate:
+    title: Rate
+    example:
+      date: 2018-07-08
+      rate: 14322
+    type: object
+    properties:
+      date:
+        description: ''
+        example: 2018-07-08
+        type: string
+      rate:
+        description: ''
+        example: 14322
+        type: integer
+        format: int32
+    required:
+    - date
+    - rate
+  AddExchangerateToTrackrequest:
+    title: Add ExchangeRate To TrackRequest
+    example:
+      from: GBP
+      to: IDR
+    type: object
+    properties:
+      from:
+        description: ''
+        example: GBP
+        type: string
+      to:
+        description: ''
+        example: IDR
+        type: string
+    required:
+    - from
+    - to
+  AddExchangerateToTrackSuccess:
+    title: Add ExchangeRate To Track Success
+    example:
+      code: 1000
+      message: Success
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 1000
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Success
+        type: string
+    required:
+    - code
+    - message
+  DeleteExchangeRateTrack:
+    title: DELETE Exchange Rate Track
+    example:
+      code: 1000
+      message: Success
+    type: object
+    properties:
+      code:
+        description: ''
+        example: 1000
+        type: integer
+        format: int32
+      message:
+        description: ''
+        example: Success
+        type: string
+    required:
+    - code
+    - message

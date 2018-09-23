@@ -1,0 +1,647 @@
+{
+	"info": {
+		"_postman_id": "75cf2b88-9eab-491d-ad68-394e5ab6c1aa",
+		"name": "Forreign Currency",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/foreign-currency/v1/ping",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"foreign-currency",
+						"v1",
+						"ping"
+					]
+				},
+				"description": "Check Connectivity"
+			},
+			"response": [
+				{
+					"name": "Ping",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/ping",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"ping"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "33",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 21:29:10 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":1000,\"message\":\"Success\"}"
+				}
+			]
+		},
+		{
+			"name": "Add Daily Exchange Rate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"date\": \"2001-03-03\",\n    \"from\": \"IDR\",\n    \"to\": \"IDR\",\n    \"rate\": 0.9\n}"
+				},
+				"url": {
+					"raw": "{{url}}/foreign-currency/v1/exchange-rates",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"foreign-currency",
+						"v1",
+						"exchange-rates"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add Daily Exchange Rate Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\": \"2001-03-0\",\n    \"from\": \"IDR\",\n    \"to\": \"USD\",\n    \"rate\": 1400\n}"
+						},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "33",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 11 Sep 2018 22:33:04 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":1000,\"message\":\"Success\"}"
+				},
+				{
+					"name": "Add Daily Exchange Rate Bad Request",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"date\": \"2001-03-0\",\n    \"from\": \"ID\",\n    \"to\": \"US=D\",\n    \"rate\": 14000\n}"
+						},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "171",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 22:29:53 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":2005,\"message\":\"Invalid Input Data\",\"errors\":{\"date\":\"must be a valid date\",\"from\":\"Value ID is not valid in Currency\",\"to\":\"Value US=D is not valid in Currency\"}}"
+				}
+			]
+		},
+		{
+			"name": "GET List Exchange Rate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/foreign-currency/v1/exchange-rates?date=2018-07-08",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"foreign-currency",
+						"v1",
+						"exchange-rates"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2018-07-08"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET List Exchange Rate Bad Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates?date=2018-07-0",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2018-07-0"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "76",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 22:33:29 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":2005,\"message\":\"Invalid Input Data\",\"errors\":\"must be a valid date\"}"
+				},
+				{
+					"name": "GET List Exchange Rate Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates?date=2018-07-08",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2018-07-08"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "267",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 22:31:38 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":1000,\"message\":\"Success\",\"data\":[{\"from\":\"USD\",\"to\":\"GBP\",\"rate\":0.123,\"seven_day_rates\":0.5309667},{\"from\":\"IDR\",\"to\":\"USD\",\"rate\":14322,\"seven_day_rates\":14066.714},{\"from\":\"JPY\",\"to\":\"IDR\",\"rate\":\"insufficient data\",\"seven_day_rates\":\"insufficient data\"}]}"
+				}
+			]
+		},
+		{
+			"name": "GET Trend Exchange Rate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/foreign-currency/v1/exchange-rates/trend?from=IDR&to=USD",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"foreign-currency",
+						"v1",
+						"exchange-rates",
+						"trend"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "IDR"
+						},
+						{
+							"key": "to",
+							"value": "USD"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GET Trend Exchange Rate Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates/trend?from=IDR&to=USD",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates",
+								"trend"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "IDR"
+								},
+								{
+									"key": "to",
+									"value": "USD"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "357",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 11 Sep 2018 19:29:49 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":1000,\"message\":\"Success\",\"data\":{\"from\":\"IDR\",\"to\":\"USD\",\"average\":14066.714,\"variance\":1114,\"rates\":[{\"date\":\"2018-07-08\",\"rate\":14322},{\"date\":\"2018-07-07\",\"rate\":14347},{\"date\":\"2018-07-06\",\"rate\":13233},{\"date\":\"2018-07-05\",\"rate\":14123},{\"date\":\"2018-07-04\",\"rate\":14129},{\"date\":\"2018-07-03\",\"rate\":14222},{\"date\":\"2018-07-02\",\"rate\":14091}]}}"
+				}
+			]
+		},
+		{
+			"name": "Add ExchangeRate To Track",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"from\": \"GBP\",\n\t\"to\":\"IDR\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/foreign-currency/v1/exchange-rates/tracks",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"foreign-currency",
+						"v1",
+						"exchange-rates",
+						"tracks"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add ExchangeRate To Track Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"from\": \"JPY\",\n\t\"to\":\"IDR\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates/tracks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates",
+								"tracks"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "33",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 21:29:32 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":1000,\"message\":\"Success\"}"
+				},
+				{
+					"name": "Add ExchangeRate To Track Duplicate",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"disabled": false
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"from\": \"JPY\",\n\t\"to\":\"IDR\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates/tracks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates",
+								"tracks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "69",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 22:34:01 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":15006,\"message\":\"Duplicate entry 'jpyidr' for key 'PRIMARY'\"}"
+				}
+			]
+		},
+		{
+			"name": "DELETE Exchange Rate Track",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/foreign-currency/v1/exchange-rates/tracks?from=GBP&to=IDR",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"foreign-currency",
+						"v1",
+						"exchange-rates",
+						"tracks"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "GBP"
+						},
+						{
+							"key": "to",
+							"value": "IDR"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "DELETE Exchange Rate Track",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/foreign-currency/v1/exchange-rates/tracks?from=JPY&to=IDR",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"foreign-currency",
+								"v1",
+								"exchange-rates",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "JPY"
+								},
+								{
+									"key": "to",
+									"value": "IDR"
+								}
+							]
+						}
+					},
+					"status": "Accepted",
+					"code": 202,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "33",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 12 Sep 2018 21:28:59 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookie": [],
+					"body": "{\"code\":1000,\"message\":\"Success\"}"
+				}
+			]
+		}
+	]
+}
